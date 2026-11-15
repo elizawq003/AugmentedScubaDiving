@@ -56,6 +56,7 @@ public class CallDashboardManager : MonoBehaviour
             if (info.name == crewName){
                 dialed = info.frequency.ToString();
                 UpdateDisplay();
+                dial.HangUp();
                 dial.QuickDial(info.frequency);
                 return;
             }
@@ -66,6 +67,7 @@ public class CallDashboardManager : MonoBehaviour
 
     //dial emergency number
     public void CallEmergency(){
+        dial.HangUp();
         dial.QuickDial(ctm.GetEmergencyFrequency());
     }
 

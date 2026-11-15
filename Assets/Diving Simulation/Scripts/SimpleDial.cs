@@ -71,4 +71,11 @@ public class SimpleDial : MonoBehaviour
             isIncomingCall = false;
         }
     }
+
+    //free the line after audio clip finishes
+    void Update(){
+        if (isBusy && !isIncomingCall && !aS.isPlaying){
+            isBusy = false;
+        }
+    }
 }

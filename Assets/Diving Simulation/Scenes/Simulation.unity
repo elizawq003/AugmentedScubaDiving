@@ -1944,7 +1944,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 70, y: -5.8}
-  m_SizeDelta: {x: 40, y: 30}
+  m_SizeDelta: {x: 60, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &121679277
 MonoBehaviour:
@@ -14544,7 +14544,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Pedro
 --- !u!222 &701128505
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28379,7 +28379,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Suzie
 --- !u!222 &1452196617
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31456,7 +31456,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Romain
 --- !u!222 &1678987623
 CanvasRenderer:
   m_ObjectHideFlags: 0
