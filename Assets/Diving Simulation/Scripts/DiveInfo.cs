@@ -8,6 +8,8 @@ public class DiveInfo : MonoBehaviour
 {
     public InformationManager iM;
     public Text depthText;
+    public Text batteryText;   // InfoPanel > BatteryInfoText
+    public Text oxygenText;    // InfoPanel > OxygenInfoText
     public Text diveTimeText;
     private float timeUnderwater = 0f;//in seconds
 
@@ -34,6 +36,16 @@ public class DiveInfo : MonoBehaviour
         int minutes = (int)(timeUnderwater / 60);
         int seconds = (int)(timeUnderwater % 60);
         diveTimeText.text = "Dive time: " + minutes.ToString("00") + ":" + seconds.ToString("00");
+
+        if (batteryText != null){
+            batteryText.text = "Battery: " + Mathf.RoundToInt(iM.GetBatteryLevel() / iM.GetMaxBatteryLevel() * 100f) + "%";
+        }
+
+        if (oxygenText != null){
+            oxygenText.text = "Oxygen: " + Mathf.RoundToInt(iM.GetOxygenLevel() / iM.GetMaxOxygenLevel() * 100f) + "%";
+        }
+
+
         
 
     }

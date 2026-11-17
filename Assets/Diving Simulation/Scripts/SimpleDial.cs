@@ -26,6 +26,7 @@ public class SimpleDial : MonoBehaviour
         if (!isBusy) // You need to hangup to make a call.
         {
             isBusy = true;
+            aS.loop = false; // calls play once, never loop
             aS.clip = ctm.CallCrewmate(freq);
             aS.Play();
         }
@@ -67,6 +68,7 @@ public class SimpleDial : MonoBehaviour
         if (isBusy)
         {
             aS.Stop();
+            aS.loop = false;                 // stop a hung-up ringtone's loop leaking into the next call
             isBusy = false;
             isIncomingCall = false;
         }

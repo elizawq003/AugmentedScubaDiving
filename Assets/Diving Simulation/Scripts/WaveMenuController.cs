@@ -23,6 +23,8 @@ public class WaveMenuController : MonoBehaviour
     public float waveDistance = 0.15f;        // metres the hand must travel left -> right
     public float waveMaxTime = 0.8f;          // ...within this many seconds
 
+    public bool hideMenuAfterPress = false; // keep the round menu up
+
 
     //Testing in Unity
     public Key testKey = Key.M;
@@ -89,7 +91,7 @@ public class WaveMenuController : MonoBehaviour
         lookFlat.y = 0f;
         lookFlat.Normalize();
 
-                bool palmOutward = Vector3.Dot(palmNormal, lookFlat) > palmOutwardThreshold;
+        bool palmOutward = Vector3.Dot(palmNormal, lookFlat) > palmOutwardThreshold;
         if (!palmOutward)
         {
             tracking = false;
@@ -99,8 +101,8 @@ public class WaveMenuController : MonoBehaviour
         // How far right is the hand, from the diver's point of view?
         float x = Vector3.Dot(palmPos - head.position, head.right);
 
-        // (Re)start measuring if: just started, too slow, or the hand moved further left
-        if (!tracking || Time.time - startTime > waveMaxTime || x < startX)
+      // Start a new measurement if we weren't tracking, or the last one took too long
+        if (!tracking || Time.time - startTime > waveMaxTime)
         {
             tracking = true;
             startX = x;
@@ -108,14 +110,21 @@ public class WaveMenuController : MonoBehaviour
             return;
         }
 
-        // Moved far enough to the right in time -> it's a wave
-        if (x - startX >= waveDistance)
-        {
+        float moved = x - startX;   // + = hand moved right, - = hand moved left
+
+        if (moved >= waveDistance){            // left -> right: show
+    
+            if (!menuRoot.activeSelf) ShowMenu();
             tracking = false;
-            cooldownUntil = Time.time + 1f;
-            ToggleMenu();
+            cooldownUntil = Time.time + 0.75f;
         }
-    }
+        else if (moved <= -waveDistance){      // right -> left: hide
+            HideMenu();
+            tracking = false;
+            cooldownUntil = Time.time + 0.75f;
+            }
+        }
+    
 
     /* Shows the menu in front of the diver, facing them, then leaves it still. */
     public void ShowMenu(){
@@ -144,11 +153,18 @@ public class WaveMenuController : MonoBehaviour
     //open + close panel for each button
     public void OpenPanel(GameObject panel)
     {
-        foreach (GameObject p in panels)
-            if (p != null) p.SetActive(false);
+        bool wasOpen = panel.activeSelf;
 
-        panel.SetActive(true);
-        HideMenu();
+        CloseAllPanels();
+
+        if (!wasOpen)
+            panel.SetActive(true);
+
+        if (hideMenuAfterPress)
+            HideMenu();
+        
+        shownAt = Time.time;// a press counts as activity: restart the auto-hide timer
+
     }
 
     public void CloseAllPanels()
