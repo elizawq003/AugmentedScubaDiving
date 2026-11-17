@@ -25,6 +25,8 @@ public class WaveMenuController : MonoBehaviour
 
     public bool hideMenuAfterPress = false; // keep the round menu up
 
+    public float panelHeight = 0.2f;   // how far above the round menu panels appear (metres)
+
 
     //Testing in Unity
     public Key testKey = Key.M;
@@ -158,6 +160,9 @@ public class WaveMenuController : MonoBehaviour
         CloseAllPanels();
 
         if (!wasOpen)
+            // place the panel just above the round menu, facing the diver, and leave it there
+            panel.transform.position = menuRoot.transform.position + Vector3.up * panelHeight;
+            panel.transform.rotation = menuRoot.transform.rotation;
             panel.SetActive(true);
 
         if (hideMenuAfterPress)
