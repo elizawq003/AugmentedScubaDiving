@@ -27,6 +27,8 @@ public class WaveMenuController : MonoBehaviour
 
     public float panelHeight = 0.2f;   // how far above the round menu panels appear (metres)
 
+    public CrewArrowNavigator arrowNavigator;   // drag in: Flat > CrewNavigator
+
 
     //Testing in Unity
     public Key testKey = Key.M;
@@ -121,7 +123,7 @@ public class WaveMenuController : MonoBehaviour
             cooldownUntil = Time.time + 0.75f;
         }
         else if (moved <= -waveDistance){      // right -> left: hide
-            HideMenu();
+            HideAll();
             tracking = false;
             cooldownUntil = Time.time + 0.75f;
             }
@@ -144,6 +146,13 @@ public class WaveMenuController : MonoBehaviour
     public void HideMenu()
     {
         menuRoot.SetActive(false);
+    }
+
+    public void HideAll(){
+        HideMenu();
+        CloseAllPanels();
+        if (arrowNavigator != null)
+            arrowNavigator.StopNavigation();
     }
 
     public void ToggleMenu()

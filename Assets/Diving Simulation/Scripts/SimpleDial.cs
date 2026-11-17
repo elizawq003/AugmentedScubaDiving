@@ -80,4 +80,8 @@ public class SimpleDial : MonoBehaviour
             isBusy = false;
         }
     }
+
+    public bool IsRinging() { return isIncomingCall; }
+    public int GetIncomingFrequency() { return incomingCallerFrequency; }
+
 }
