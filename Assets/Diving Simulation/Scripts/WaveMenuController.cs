@@ -168,17 +168,31 @@ public class WaveMenuController : MonoBehaviour
 
         CloseAllPanels();
 
-        if (!wasOpen)
-            // place the panel just above the round menu, facing the diver, and leave it there
-            panel.transform.position = menuRoot.transform.position + Vector3.up * panelHeight;
-            panel.transform.rotation = menuRoot.transform.rotation;
-            panel.SetActive(true);
+        if (!wasOpen){
 
+            if (menuRoot.activeSelf)
+            {
+                // opened from the floating menu: place the panel just above it
+                panel.transform.position = menuRoot.transform.position + Vector3.up * panelHeight;
+                panel.transform.rotation = menuRoot.transform.rotation;
+            }
+            else
+            {
+                // opened from the wrist band: place the panel in front of the diver
+                Vector3 lookFlat = head.forward;
+                lookFlat.y = 0f;
+                lookFlat.Normalize();
+
+                panel.transform.position = head.position + lookFlat * menuDistance
+                                       + Vector3.up * (panelHeight - menuDrop);
+                panel.transform.rotation = Quaternion.LookRotation(lookFlat);
+            }
+            panel.SetActive(true);
+        }
         if (hideMenuAfterPress)
             HideMenu();
-        
-        shownAt = Time.time;// a press counts as activity: restart the auto-hide timer
 
+        shownAt = Time.time; // a press counts as activity: restart the auto-hide timer
     }
 
     public void CloseAllPanels()
